@@ -24,6 +24,7 @@ async function getTokenCounts(){
 	
 }
 async function buyToken(){
+	console.log("refferal",user.ref);
 	let ref
 	if(validateErcAddress(user.ref))
 		ref = user.ref
@@ -33,9 +34,10 @@ async function buyToken(){
 		ref = zeroAddress
 	
 	let amount = toHexString( $('.buy-token-input')[0].value * 1e18 )
-	await tokenContract.methods.buyToken(amount, ref).send({
+	await tokenContract.methods.buyToken(amount,ref).send({
 		from: user.address,
-		value: amount
+		value: amount,
+		gasLimit:210000
 	})
 }
 async function getBuyOutput(){
@@ -52,7 +54,8 @@ async function sellToken(){
 	let amount = toHexString( $('.sell-token-input')[0].value * 1e18 )
 	await tokenContract.methods.sellToken(amount).send({
 		from: user.address,
-		value: amount
+		gasLimit:210000
+
 	})
 }
 async function getRefCount(){
